@@ -28,3 +28,5 @@ setup => cd /mnt/e/sachin/My\ Cohort
     7th run command ==> npm install  
     8th run command ==> npm run dev
     
+
+    
