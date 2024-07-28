@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deboincing</title>
+</head>
+<body>
+  <input oninput="debouncePopulateDiv()" id="firstNumber" type="text" placeholder="First number"><br><br> 
+  <input oninput="debouncePopulateDiv()" id="secondNumber" type="text" placeholder="Second number"><br><br>
+  <div id="finalSum"></div>
+  
+</body>
+ <script>
+    let timeout; 
+    function debouncePopulateDiv() {
+      //delay the call to populateDiv until i've not been called for 100ms 
+      // and i've been called atleast once
+
+      clearTimeout(timeout); // cancel a clock
+      timeout = setTimeout(function(){
+        populateDiv()
+      }, 1000); 
+    }
+
+    function populateDiv(){
+      //.value is use for get the value entred in the input element.
+      const a = document.getElementById("firstNumber").value ;
+      const b = document.getElementById("secondNumber").value;
+      // const element = document.getElementById("finalSum");
+
+      //because value is string we have convert it by using "parseInt()"
+      // element.innerHTML = parseInt(a) + parseInt(b);
+      //fetch
+      fetch("http://localhost:8000/sum?a=" + a + "&b=" + b)
+        .then(function(response){
+          response.text()
+            .then(function(ans){
+              document.getElementById("finalSum").innerHTML = ans;
+            })
+        })
+    }
+
+    async function populateDiv2( ){
+      const a = document.getElementById("firstNumber").value ;
+      const b = document.getElementById("secondNumber").value;
+      
+      const response = await fetch("https://sum-server.100xdevs.com/sum?a=" + a + "&b=" + b);
+      const ans = await  response.text();
+      document.getElementById("finalSum").innerHTML = ans;
+    }
+
+    
+  </script>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sum Calculator</title>
+</head>
+<body>
+  <input oninput="debouncePopulateDiv()" id="firstNumber" type="text" placeholder="First number"><br><br> 
+  <input oninput="debouncePopulateDiv()" id="secondNumber" type="text" placeholder="Second number"><br><br>
+  <div id="finalSum"></div>
+  
+</body>
+<script>
+    let timeout;
+    
+    function debouncePopulateDiv() {
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+            populateDiv();
+        }, 300); // Reduced to 300ms for better UX
+    }
+
+    function populateDiv() {
+        const a = document.getElementById("firstNumber").value;
+        const b = document.getElementById("secondNumber").value;
+        
+        if (isNaN(a) || isNaN(b) || a.trim() === '' || b.trim() === '') {
+            document.getElementById("finalSum").innerHTML = "Please enter valid numbers";
+            return;
+        }
+
+        fetch(`http://localhost:8000/sum?a=${parseInt(a)}&b=${parseInt(b)}`)
+            .then(response => response.text())
+            .then(ans => {
+                document.getElementById("finalSum").innerHTML = ans;
+            })
+            .catch(error => {
+                document.getElementById("finalSum").innerHTML = "Error fetching sum";
+                console.error("Error:", error);
+            });
+    }
+</script>
+</html>

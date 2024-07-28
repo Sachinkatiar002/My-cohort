@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo</title>
+</head>
+<body>
+  <div>
+    <input id="title" type="text" placeholder="title"> <br> <br>
+    <input id="description" type="text" placeholder="description"> <br> <br>
+    <button onclick="addTodo()">Add todo</button>
+    <div id="container"></div>
+  </div>
+  <!-- 
+  document.createElement
+  document.appendChild
+  element.setAttribute
+  element.children -->
+
+  <script>
+
+    /** 
+     write a function markAsDone.
+     Write a function createChild.
+     create 3 grandchildren.
+     write a attribute onclick using setAttribute and appendChild.
+     write a attribute "id", id.
+    **/
+    let globalId = 1;
+
+    function markAsDone(todoId){
+     const parent = document.getElementById(todoId);
+     parent.children[2].innerHTML = "Done!"; 
+    }
+
+    function createChild (title, description, id) {
+      const child = document.createElement('div');
+
+      const firstGrandchild = document.createElement('div');
+      firstGrandchild.innerHTML = title;
+
+      const secondGrandChild = document.createElement('div');
+      secondGrandChild.innerHTML = description;
+
+      const thirdGrandChild = document.createElement('button');
+      thirdGrandChild.innerHTML = "Mark as done";
+
+      thirdGrandChild.setAttribute("Onclick", `markAsDone(${id})`);
+
+      child.appendChild(firstGrandchild);
+      child.appendChild(secondGrandChild);
+      child.appendChild(thirdGrandChild);
+
+      child.setAttribute("id", id);
+
+      return child;
+    }
+
+    function addTodo() { 
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const parent = document.getElementById("container");
+
+      parent.appendChild(createChild(title, description, globalId++)); 
+
+      // document.createElement ==> it creates a dom div element which is not currently present in the dom.
+      // const childDiv = document.createElement("div");
+      // childDiv.innerHTML = title;
+      // document.getElementById("container").appendChild(childDiv); 
+
+      // const originalHtml = document.getElementById("container").innerHTML;
+
+      // document.getElementById("container").
+      // innerHTML = originalHtml + `<div>
+      //   <div>${title}</div>
+      //   <div>${description}</div>
+      //   <button>Mark as done</button>
+      // </div>`
+    }
+  </script>
+</body>
+</html>
