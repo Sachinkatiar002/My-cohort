@@ -117,7 +117,7 @@ function App(){
     // setTodos(newTodos);
   }
 
-// {todos.map(todo =><Todo title={todo.title} description={todo.description}/>)}
+  // {todos.map(todo =><Todo title={todo.title} description={todo.description}/>)}
   return(
     <div>    
       <button onClick={addTodo} >Add a todo</button>  
