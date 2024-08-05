@@ -1,34 +1,49 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 function App() {
-  const [exchangeData, setExchangeData] = useState({});
+  const [exchange1Data, setExchange1Data] = useState({});
+  const [exchange2Data, setExchange2Data] = useState({});
   const [bankData, setBankData] = useState({});
-  console.log("hi there re-render");
-  
-  useEffect(() =>{
-    setTimeout (() => {   
-      setBankData({income: 100});
-      // Assume it is { income: 100 }
-    }, 3000);   
+
+  useEffect(() => {
+    // Some operation to get the data
+    setExchange1Data({
+      returns: 100
+    });
   }, [])
 
   useEffect(() => {
-    setTimeout(() => {   
-      setExchangeData({
-        returns: 100
-      });
-    }, 1000);
+    // Some operation to get the data
+    setExchange2Data({
+      returns: 100
+    });
   }, [])
- 
-  
 
-  const incomeTax = (bankData.income + exchangeData.returns) * 0.3;
+  useEffect(() => {
+    // Some operation to get the data
+    setTimeout(() => {
+      setBankData({
+        income: 100
+      });
+    }, 5000)
+  }, [])
+
+
+  
+  const cryptoReturns = useMemo( () => {
+
+    console.log("hi there before");   
+    return exchange1Data.returns + exchange2Data.returns;
+  }, [exchange1Data, exchange2Data]);
+  
+  
+  const incomeTax = (cryptoReturns + bankData.income) * 0.3
 
   return (
     <div>
         hi there, your income tax returns are {incomeTax}
     </div>
-  ) 
+  )
 }
 
 export default App
