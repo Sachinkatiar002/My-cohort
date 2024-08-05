@@ -1,17 +1,34 @@
-import { useState } from 'react'
-
+import { useEffect, useState } from 'react'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [exchangeData, setExchangeData] = useState({});
+  const [bankData, setBankData] = useState({});
+  console.log("hi there re-render");
+  
+  useEffect(() =>{
+    setTimeout (() => {   
+      setBankData({income: 100});
+      // Assume it is { income: 100 }
+    }, 3000);   
+  }, [])
 
-  console.log("hi there from App.jsxs");
+  useEffect(() => {
+    setTimeout(() => {   
+      setExchangeData({
+        returns: 100
+      });
+    }, 1000);
+  }, [])
+ 
   
 
+  const incomeTax = (bankData.income + exchangeData.returns) * 0.3;
+
   return (
-    <>
-     <button onClick={ () => setCount((count) => count + 1)} >Count is {count} </button>
-    </>
-  )
+    <div>
+        hi there, your income tax returns are {incomeTax}
+    </div>
+  ) 
 }
 
 export default App
