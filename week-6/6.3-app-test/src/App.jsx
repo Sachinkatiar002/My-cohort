@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, memo, useCallback } from 'react'
 
 function App() {
   const [exchange1Data, setExchange1Data] = useState({});
@@ -29,21 +29,24 @@ function App() {
   }, [])
 
 
-  
-  const cryptoReturns = useMemo( () => {
-
-    console.log("hi there before");   
+  const calculateCryptoReturns = useCallback( () => { 
     return exchange1Data.returns + exchange2Data.returns;
-  }, [exchange1Data, exchange2Data]);
+  }, [exchange1Data,exchange2Data])
   
-  
-  const incomeTax = (cryptoReturns + bankData.income) * 0.3
-
   return (
     <div>
-        hi there, your income tax returns are {incomeTax}
+       <CryptoGainCalculator calculateCryptoReturns={calculateCryptoReturns}/>
     </div>
   )
 }
+
+
+const CryptoGainCalculator = memo(function({calculateCryptoReturns})  {
+  console.log("crypto child rerendered");
+  
+  return <div>
+    Your crpto return are {calculateCryptoReturns()}
+  </div>
+})
 
 export default App
